@@ -41,9 +41,9 @@ settings = {
     },
     "upgrader": {
         "Spawn1": {
-            "minimumUnits": 2,
+            "minimumUnits": 5,
             "improveAfter": 1,
-            "prioritize": [WORK, MOVE]
+            "prioritize": [WORK, MOVE, CARRY]
         }
     },
     "builder": {
