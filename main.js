@@ -1,6 +1,7 @@
 var roleHarvester = require('role.harvester');
 var roleUpgrader = require('role.upgrader');
 var roleBuilder = require('role.builder');
+var roleExplorer = require('role.explorer');
 
 function addRandomPartToBody(type, body, spawnName) {
     var item = settings[type][spawnName]["prioritize"][Math.floor(Math.random() * settings[type][spawnName]["prioritize"].length)];
@@ -40,28 +41,42 @@ settings = {
     },
     "upgrader": {
         "Spawn1": {
-            "minimumUnits": 1,
+            "minimumUnits": 2,
             "improveAfter": 1,
             "prioritize": [WORK, MOVE]
         }
     },
     "builder": {
         "Spawn1": {
-            "minimumUnits": 5,
-            "improveAfter": 2,
+            "minimumUnits": 3,
+            "improveAfter": 1,
             "prioritize": [CARRY, MOVE]
         }
     },
     "explorer": {
         "Spawn1": {
-            "minimumUnits": 0,
+            "minimumUnits": 1,
             "improveAfter": 0,
             "prioritize": [MOVE, HEAL]
+        }
+    },
+    "repairer": {
+        "Spawn1": {
+            "minimumUnits": 0,
+            "improveAfter": 0,
+            "prioritize": [MOVE, WORK]
         }
     }
 }
 
 module.exports.loop = function () {
+
+    for (var name in Memory.creeps) {
+        if (!Game.creeps[name]) {
+            delete Memory.creeps[name];
+            console.log('Clearing non-existing creep memory:', name);
+        }
+    }
 
     var tower = Game.getObjectById('bce4e9c3b1875428f64c5cce');
     if (tower) {
@@ -83,6 +98,7 @@ module.exports.loop = function () {
         createScreepIfNotEnough('upgrader', [WORK, CARRY, MOVE, MOVE, MOVE], name);
         createScreepIfNotEnough('builder', [WORK, WORK, CARRY, MOVE, MOVE, MOVE], name);
         createScreepIfNotEnough('explorer', [CLAIM, MOVE, MOVE], name);
+        createScreepIfNotEnough('repairer', [WORK, CARRY, MOVE], name);
     }
 
 
