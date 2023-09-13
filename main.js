@@ -41,14 +41,14 @@ settings = {
     },
     "upgrader": {
         "Spawn1": {
-            "minimumUnits": 5,
+            "minimumUnits": 3,
             "improveAfter": 1,
             "prioritize": [WORK, MOVE, CARRY]
         }
     },
     "builder": {
         "Spawn1": {
-            "minimumUnits": 1,
+            "minimumUnits": 4,
             "improveAfter": 1,
             "prioritize": [CARRY, MOVE]
         }
