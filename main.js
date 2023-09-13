@@ -48,7 +48,7 @@ settings = {
     },
     "builder": {
         "Spawn1": {
-            "minimumUnits": 3,
+            "minimumUnits": 1,
             "improveAfter": 1,
             "prioritize": [CARRY, MOVE]
         }
