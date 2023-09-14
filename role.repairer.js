@@ -50,10 +50,21 @@ var roleRepairer = {
 
         }
         else {
-            var source = creep.pos.findClosestByPath(FIND_SOURCES_ACTIVE);
-            if (creep.harvest(source) == ERR_NOT_IN_RANGE) {
-                creep.moveTo(source, { visualizePathStyle: { stroke: '#ffaa00' } });
+            var sources = creep.room.find(FIND_SOURCES_ACTIVE, {
+                filter: object => object.room.controller.owner.username == "OldMartijntje"
+            });
+            if (sources.length == 0) {
+                creep.moveTo(Game.flags.idleRepairer, { visualizePathStyle: { stroke: '#ffffff' } });
+            } else {
+                var source = creep.pos.findClosestByPath(sources);
+                var tryToHarvest = creep.harvest(source)
+                if (tryToHarvest == ERR_NOT_IN_RANGE) {
+                    creep.moveTo(source, { visualizePathStyle: { stroke: '#ffaa00' } });
+                } else {
+
+                }
             }
+
         }
     }
 };
