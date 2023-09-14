@@ -50,7 +50,7 @@ settings = {
     },
     "builder": {
         "Spawn1": {
-            "minimumUnits": 2,
+            "minimumUnits": 4,
             "improveAfter": 1,
             "prioritize": [CARRY, MOVE]
         }
@@ -103,7 +103,7 @@ module.exports.loop = function () {
     }
 
     for (var name in Game.spawns) {
-        createScreepIfNotEnough('harvester', [WORK, WORK, CARRY, MOVE, MOVE, MOVE], name);
+        createScreepIfNotEnough('harvester', [WORK, WORK, CARRY, CARRY, MOVE, MOVE, MOVE], name);
         createScreepIfNotEnough('upgrader', [WORK, WORK, CARRY, MOVE, MOVE, MOVE], name);
         createScreepIfNotEnough('builder', [WORK, WORK, WORK, CARRY, MOVE, MOVE, MOVE], name);
         createScreepIfNotEnough('explorer', [CLAIM, MOVE, MOVE], name);
