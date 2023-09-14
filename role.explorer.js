@@ -18,16 +18,16 @@ var roleExplorer = {
 
         if (creep.memory.exploring || creep.memory.forceLeave) {
             if (creep.memory.direction == 1) {
-                var exit = creep.pos.findClosestByRange(FIND_EXIT_TOP);
+                var exit = creep.pos.findClosestByPath(FIND_EXIT_TOP);
             } else if (creep.memory.direction == 2) {
-                var exit = creep.pos.findClosestByRange(FIND_EXIT_BOTTOM);
+                var exit = creep.pos.findClosestByPath(FIND_EXIT_BOTTOM);
             } else if (creep.memory.direction == 3) {
-                var exit = creep.pos.findClosestByRange(FIND_EXIT_LEFT);
+                var exit = creep.pos.findClosestByPath(FIND_EXIT_LEFT);
             } else if (creep.memory.direction == 4) {
-                var exit = creep.pos.findClosestByRange(FIND_EXIT_RIGHT);
+                var exit = creep.pos.findClosestByPath(FIND_EXIT_RIGHT);
             } else {
                 creep.memory.direction = 1;
-                var exit = creep.pos.findClosestByRange(FIND_EXIT_TOP);
+                var exit = creep.pos.findClosestByPath(FIND_EXIT_TOP);
             }
             if (exit == null && creep.memory.direction != 4) {
                 creep.memory.direction += 1;
