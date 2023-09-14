@@ -2,6 +2,7 @@ var roleHarvester = require('role.harvester');
 var roleUpgrader = require('role.upgrader');
 var roleBuilder = require('role.builder');
 var roleExplorer = require('role.explorer');
+var roleRepairer = require('role.repairer');
 
 function addRandomPartToBody(type, body, spawnName) {
     var item = settings[type][spawnName]["prioritize"][Math.floor(Math.random() * settings[type][spawnName]["prioritize"].length)];
@@ -15,7 +16,8 @@ function createScreepIfNotEnough(type, body, spawnName) {
     var spawnScreeps = _.filter(screeps, (creep) => creep.memory.spawn == spawnName);
     if (spawnScreeps.length < settings[type][spawnName]["minimumUnits"]) {
         if (spawnScreeps.length >= settings[type][spawnName]["improveAfter"]) {
-            body = addRandomPartToBody(type, body, spawnName)
+            body = addRandomPartToBody(type, body, spawnName);
+            body = addRandomPartToBody(type, body, spawnName);
         }
         var newName = type + Game.time;
         var value = Game.spawns[spawnName].spawnCreep(body, newName,
@@ -55,16 +57,23 @@ settings = {
     },
     "explorer": {
         "Spawn1": {
-            "minimumUnits": 1,
+            "minimumUnits": 0,
             "improveAfter": 0,
             "prioritize": [MOVE, HEAL]
         }
     },
     "repairer": {
         "Spawn1": {
-            "minimumUnits": 0,
+            "minimumUnits": 4,
             "improveAfter": 0,
             "prioritize": [MOVE, WORK]
+        }
+    },
+    "manager": {
+        "Spawn1": {
+            "minimumUnits": 0,
+            "improveAfter": 0,
+            "prioritize": [MOVE]
         }
     }
 }
@@ -98,7 +107,8 @@ module.exports.loop = function () {
         createScreepIfNotEnough('upgrader', [WORK, WORK, CARRY, MOVE, MOVE, MOVE], name);
         createScreepIfNotEnough('builder', [WORK, WORK, WORK, CARRY, MOVE, MOVE, MOVE], name);
         createScreepIfNotEnough('explorer', [CLAIM, MOVE, MOVE], name);
-        createScreepIfNotEnough('repairer', [WORK, CARRY, MOVE], name);
+        createScreepIfNotEnough('repairer', [WORK, WORK, CARRY, CARRY, MOVE, MOVE], name);
+        createScreepIfNotEnough('manager', [MOVE, MOVE, MOVE], name);
     }
 
 
@@ -127,6 +137,9 @@ module.exports.loop = function () {
         }
         if (creep.memory.role == 'explorer') {
             roleExplorer.run(creep);
+        }
+        if (creep.memory.role == 'repairer') {
+            roleRepairer.run(creep);
         }
     }
 }

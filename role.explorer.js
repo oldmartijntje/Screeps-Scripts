@@ -39,10 +39,10 @@ var roleExplorer = {
         else {
             if (creep.room.controller) {
                 if (creep.claimController(creep.room.controller) == ERR_NOT_IN_RANGE) {
-                    creep.moveTo(creep.room.controller);
+                    creep.moveTo(creep.room.controller, { visualizePathStyle: { stroke: '#ffaa00' } });
                 } else if (creep.claimController(creep.room.controller) == ERR_GCL_NOT_ENOUGH) {
                     if (creep.reserveController(creep.room.controller) == ERR_NOT_IN_RANGE) {
-                        creep.moveTo(creep.room.controller);
+                        creep.moveTo(creep.room.controller, { visualizePathStyle: { stroke: '#ffaa00' } });
                     } else {
                         creep.memory.forceLeave = true;
                     }
