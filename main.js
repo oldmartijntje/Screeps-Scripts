@@ -41,14 +41,14 @@ settings = {
     },
     "upgrader": {
         "Spawn1": {
-            "minimumUnits": 3,
+            "minimumUnits": 2,
             "improveAfter": 1,
             "prioritize": [WORK, MOVE, CARRY]
         }
     },
     "builder": {
         "Spawn1": {
-            "minimumUnits": 4,
+            "minimumUnits": 2,
             "improveAfter": 1,
             "prioritize": [CARRY, MOVE]
         }
@@ -94,9 +94,9 @@ module.exports.loop = function () {
     }
 
     for (var name in Game.spawns) {
-        createScreepIfNotEnough('harvester', [WORK, CARRY, MOVE, MOVE, MOVE], name);
-        createScreepIfNotEnough('upgrader', [WORK, CARRY, MOVE, MOVE, MOVE], name);
-        createScreepIfNotEnough('builder', [WORK, WORK, CARRY, MOVE, MOVE, MOVE], name);
+        createScreepIfNotEnough('harvester', [WORK, WORK, CARRY, MOVE, MOVE, MOVE], name);
+        createScreepIfNotEnough('upgrader', [WORK, WORK, CARRY, MOVE, MOVE, MOVE], name);
+        createScreepIfNotEnough('builder', [WORK, WORK, WORK, CARRY, MOVE, MOVE, MOVE], name);
         createScreepIfNotEnough('explorer', [CLAIM, MOVE, MOVE], name);
         createScreepIfNotEnough('repairer', [WORK, CARRY, MOVE], name);
     }
@@ -124,6 +124,9 @@ module.exports.loop = function () {
         }
         if (creep.memory.role == 'builder') {
             roleBuilder.run(creep);
+        }
+        if (creep.memory.role == 'explorer') {
+            roleExplorer.run(creep);
         }
     }
 }
