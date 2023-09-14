@@ -11,31 +11,36 @@ var roleRepairer = {
             creep.memory.repairing = true;
             creep.say('🔨 repair');
         }
-        var targets = creep.room.find(FIND_STRUCTURES, {
-            filter: object => object.hits < object.hitsMax && object.structureType != STRUCTURE_WALL
-        });
-        if (targets.length == 0) {
-            targets = creep.room.find(FIND_STRUCTURES, {
-                filter: object => object.hits < object.hitsMax
-            });
-        }
+
 
         if (creep.memory.repairing) {
+            var targets = creep.room.find(FIND_STRUCTURES, {
+                filter: object => object.hits < object.hitsMax && object.structureType != STRUCTURE_WALL && object.room.controller.owner.username == "OldMartijntje"
+            });
+            console.log(`Targets to heal without walls: ${targets.length}`)
+            if (targets.length < 5) {
+                targets = creep.room.find(FIND_STRUCTURES, {
+                    filter: object => object.hits < object.hitsMax && object.room.controller.owner.username == "OldMartijntje"
+                });
+                console.log(`Targets to heal with walls: ${targets.length}`)
+            }
             if (creep.memory.healingTarget != undefined && Game.getObjectById(creep.memory.healingTarget).hits < Game.getObjectById(creep.memory.healingTarget).hitsMax) {
                 if (creep.repair(Game.getObjectById(creep.memory.healingTarget)) == ERR_NOT_IN_RANGE) {
-                    creep.moveTo(Game.getObjectById(creep.memory.healingTarget), { visualizePathStyle: { stroke: '#3636AB' } });
+                    creep.moveTo(Game.getObjectById(creep.memory.healingTarget), { visualizePathStyle: { stroke: '#3f51b5', opacity: .5 } });
                 }
+            } else if (targets.length == 0) {
+                creep.moveTo(Game.flags.idleRepairer, { visualizePathStyle: { stroke: '#ffffff' } });
             } else {
                 targets.sort((a, b) => {
                     a.hits - b.hits;
                 });
                 if (targets.length > 0) {
-                    topTargets = targets.slice(0, Math.ceil(targets.length / 10));
+                    topTargets = targets.slice(0, Math.ceil(targets.length / 10) + 4);
                     const target = creep.pos.findClosestByPath(topTargets);
                     if (target != null) {
                         creep.memory.healingTarget = target.id;
                         if (creep.repair(target) == ERR_NOT_IN_RANGE) {
-                            creep.moveTo(target, { visualizePathStyle: { stroke: '#3636AB' } });
+                            creep.moveTo(target, { visualizePathStyle: { stroke: '#3f51b5', opacity: .5 } });
                         }
                     }
                 } else {
