@@ -32,7 +32,7 @@ var roleRepairer = {
                 creep.moveTo(Game.flags.idleRepairer, { visualizePathStyle: { stroke: '#ffffff' } });
             } else {
                 targets.sort((a, b) => {
-                    a.hits - b.hits;
+                    return a.hits - b.hits;
                 });
                 if (targets.length > 0) {
                     topTargets = targets.slice(0, Math.ceil(targets.length / 10) + 4);
